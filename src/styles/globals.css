@@ -1,6 +1,51 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-tertiary: var(--tertiary);
+  --color-background-primary: var(--background-primary);
+  --color-background-secondary: var(--background-secondary);
+  --color-background-tertiary: var(--background-tertiary);
+  --color-button: var(--button);
+  --color-text-primary: var(--text-primary);
+  --color-border-primary: var(--border-primary);
+  --color-border-secondary: var(--border-secondary);
+  --color-border-tertiary: var(--border-tertiary);
+  --color-herald: var(--herald);
+  --color-guradian: var(--guradian);
+  --color-crusader: var(--crusader);
+  --color-archon: var(--archon);
+  --color-legend: var(--legend);
+  --color-ancient: var(--ancient);
+  --color-divine: var(--divine);
+  --color-immortal: var(--immortal);
+}
+
+@layer base {
+  :root {
+    --primary: #B93A29;
+    --secondary: #E6B53A;
+    --tertiary: #8D8E8F;
+    --background-primary: #17191C;
+    --background-secondary: #19191A;
+    --background-tertiary: #2D2D2D;
+    --button: #8E2B1F;
+    --text-primary: #CDCDCE;
+    --border-primary: #2E3138;
+    --border-secondary: #8A2F23;
+    --border-tertiary: #39201E;
+    --herald: #6E8AA4;
+    --guardian: #3ABD6A;
+    --crusader: #32D384;
+    --archon: #398BFA;
+    --legend: #7066A4;
+    --ancient: #883FC0;
+    --divine: #ED6995;
+    --immortal: #D69A2D;
+  }
+
+  body {
+    @apply bg-background-primary text-text-primary;
+  }
 }

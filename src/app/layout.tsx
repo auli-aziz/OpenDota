@@ -2,6 +2,10 @@ import "~/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
+import Sidebar from "~/components/fragements/dashboard-sidebar";
+import DashboardHeader from "~/components/fragements/dashboard-header";
+import { NavbarProvider } from "~/components/context/navbar-context";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -19,7 +23,16 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
-      <body>{children}</body>
+      <body>
+        <NextTopLoader color="#E6B53A" showSpinner={false} />
+        <NavbarProvider>
+          <Sidebar />
+          <div className="flex flex-col w-full">
+            <DashboardHeader />
+            <main className="pt-28 md:pl-28 pl-18 md:pr-8 w-full">{children}</main>
+          </div>
+        </NavbarProvider>
+      </body>
     </html>
   );
 }

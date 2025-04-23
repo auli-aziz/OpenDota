@@ -1,29 +1,81 @@
-# Create T3 App
+# Dota 2 Hero Stats Dashboard
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A web-based dashboard that visualizes Dota 2 hero statistics using data from the [OpenDota API](https://docs.opendota.com/).  
+This project was created as part of a take-home technical assessment.
 
-## What's next? How do I make an app with this?
+## ✨ Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- 📊 Meta suggestion of 10 best heroes for each of the 8 matchmaking tiers
+- 🧠 Pro meta suggestion based on pick + ban + winrate
+- 🎯 Automated hero suggestion based on player account ID
+- ⚡ Responsive UI using Next.js and Tailwind CSS
+- 🧪 Unit tested logic for hero suggestions
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## 💻 Tech Stack
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- **Framework**: Next.js (App Router)
+- **Styling**: Tailwind CSS
+- **Package Manager**: pnpm
+- **Testing**: Vitest / Jest
+- **API**: [OpenDota Hero Stats](https://api.opendota.com/api/herostats)
 
-## Learn More
+## 🧰 Getting Started
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### 1. Clone the repository
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```bash
+git clone https://github.com/your-username/dota-hero-dashboard.git
+cd dota-hero-dashboard
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### 2. Install dependencies (using `pnpm`)
 
-## How do I deploy this?
+Make sure you have `pnpm` installed. If not:
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```bash
+npm install -g pnpm
+```
+
+Then install dependencies:
+
+```bash
+pnpm install
+```
+
+### 3. Run the development server
+
+```bash
+pnpm dev
+```
+
+Visit `http://localhost:3000` to open the dashboard.
+
+## 🧪 Running Tests
+
+```bash
+pnpm test
+```
+
+## 🗂️ Project Structure
+
+```
+src/
+├── app/              # Next.js pages (App Router)
+├── components/       # UI components
+├── lib/              # Data processing logic
+├── services/         # API fetchers
+├── styles/           # Tailwind/global styles
+├── tests/            # Unit tests
+└── types/            # TypeScript types/interfaces
+```
+
+<!-- ## 📦 Portability
+
+- Cross-platform compatible (Windows, macOS, Linux)
+- Can optionally be containerized with Docker
+- Uses `pnpm` for faster installs and deterministic lockfiles -->
+
+## 🥷 Sample Player IDs (for demo/testing)
+
+- `152740380`
+- `80523971`
