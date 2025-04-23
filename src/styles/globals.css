@@ -24,28 +24,52 @@
 
 @layer base {
   :root {
-    --primary: #B93A29;
-    --secondary: #E6B53A;
-    --tertiary: #8D8E8F;
-    --background-primary: #17191C;
-    --background-secondary: #19191A;
-    --background-tertiary: #2D2D2D;
-    --button: #8E2B1F;
-    --text-primary: #CDCDCE;
-    --border-primary: #2E3138;
-    --border-secondary: #8A2F23;
-    --border-tertiary: #39201E;
-    --herald: #6E8AA4;
-    --guardian: #3ABD6A;
-    --crusader: #32D384;
-    --archon: #398BFA;
-    --legend: #7066A4;
-    --ancient: #883FC0;
-    --divine: #ED6995;
-    --immortal: #D69A2D;
+    --primary: #b93a29;
+    --secondary: #e6b53a;
+    --tertiary: #8d8e8f;
+    --background-primary: #17191c;
+    --background-secondary: #19191a;
+    --background-tertiary: #2d2d2d;
+    --button: #8e2b1f;
+    --text-primary: #cdcdce;
+    --border-primary: #2e3138;
+    --border-secondary: #8a2f23;
+    --border-tertiary: #39201e;
+    --herald: #6e8aa4;
+    --guardian: #3abd6a;
+    --crusader: #32d384;
+    --archon: #398bfa;
+    --legend: #7066a4;
+    --ancient: #883fc0;
+    --divine: #ed6995;
+    --immortal: #d69a2d;
   }
 
   body {
     @apply bg-background-primary text-text-primary;
+  }
+
+  .hero-attribute-str {
+    @apply text-red-500;
+  }
+
+  .hero-attribute-agi {
+    @apply text-green-500;
+  }
+
+  .hero-attribute-int {
+    @apply text-blue-500;
+  }
+
+  .hero-attribute-uni {
+    @apply text-purple-500;
+  }
+
+  .hero-stat-bar {
+    @apply h-2 rounded-full bg-tertiary overflow-hidden relative;
+  }
+
+  .hero-stat-bar-fill {
+    @apply absolute top-0 bg-immortal left-0 h-full rounded-full;
   }
 }
