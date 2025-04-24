@@ -7,13 +7,14 @@
   --color-background-primary: var(--background-primary);
   --color-background-secondary: var(--background-secondary);
   --color-background-tertiary: var(--background-tertiary);
+  --color-background-hover: var(--background-hover);
   --color-button: var(--button);
   --color-text-primary: var(--text-primary);
   --color-border-primary: var(--border-primary);
   --color-border-secondary: var(--border-secondary);
   --color-border-tertiary: var(--border-tertiary);
   --color-herald: var(--herald);
-  --color-guradian: var(--guradian);
+  --color-guardian: var(--guardian);
   --color-crusader: var(--crusader);
   --color-archon: var(--archon);
   --color-legend: var(--legend);
@@ -30,6 +31,7 @@
     --background-primary: #17191c;
     --background-secondary: #19191a;
     --background-tertiary: #2d2d2d;
+    --background-hover: #282829;
     --button: #8e2b1f;
     --text-primary: #cdcdce;
     --border-primary: #2e3138;
@@ -70,6 +72,6 @@
   }
 
   .hero-stat-bar-fill {
-    @apply absolute top-0 bg-immortal left-0 h-full rounded-full;
+    @apply absolute top-0 left-0 h-full rounded-full;
   }
 }

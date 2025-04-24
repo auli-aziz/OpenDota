@@ -60,3 +60,28 @@ export interface HeroStats {
   pub_win: number;
   pub_win_trend: number[];
 }
+
+export interface TierHeroStats extends HeroStats {
+  tier: number;
+  picks: number;
+  wins: number;
+  winrate: number;
+}
+
+export interface TopHeroesByProStats extends HeroStats {
+  proScorePercent: number;
+  proScore: number;
+  proWinrate: number;
+  proWin: number;
+}
+
+export interface PlayerHero {
+  hero_id: number;
+  last_played: number;
+  games: number;
+  win: number;
+  with_games: number;
+  with_win: number;
+  against_games: number;
+  against_win: number;
+}

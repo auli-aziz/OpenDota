@@ -1,25 +1,21 @@
-import { ChartNoAxesColumnIncreasing } from "lucide-react";
-import Image from "next/image";
-import SecondLayout from "~/components/layouts/second-layout";
-import type { HeroStats } from "~/types/heroes";
+"use client";
 
-const ATTRIBUTES = {
-  str: { name: "Strength", color: "hero-attribute-str" },
-  agi: { name: "Agility", color: "hero-attribute-agi" },
-  int: { name: "Intelligence", color: "hero-attribute-int" },
-  all: { name: "Universal", color: "hero-attribute-uni" },
-};
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import SecondLayout from "~/components/layouts/second-layout";
+import { ChartNoAxesColumnIncreasing } from "lucide-react";
+import type { HeroStats, TierHeroStats } from "~/types/heroes";
 
 const TIERS = [
-  { id: 1, name: "Herald", color: "text-gray-400" },
-  { id: 2, name: "Guardian", color: "text-green-400" },
-  { id: 3, name: "Crusader", color: "text-emerald-400" },
-  { id: 4, name: "Archon", color: "text-blue-400" },
-  { id: 5, name: "Legend", color: "text-indigo-400" },
-  { id: 6, name: "Ancient", color: "text-purple-400" },
-  { id: 7, name: "Divine", color: "text-pink-400" },
-  { id: 8, name: "Immortal", color: "text-dota-gold" },
-]
+  { id: 1, name: "Herald", color: "gray" },
+  { id: 2, name: "Guardian", color: "green" },
+  { id: 3, name: "Crusader", color: "emerald" },
+  { id: 4, name: "Archon", color: "blue" },
+  { id: 5, name: "Legend", color: "indigo" },
+  { id: 6, name: "Ancient", color: "purple" },
+  { id: 7, name: "Divine", color: "pink" },
+  { id: 8, name: "Immortal", color: "gold" },
+];
 
 const getTop10ByTier = (heroes: HeroStats[], tier: number) => {
   const tierPickKey = `${tier}_pick` as keyof HeroStats;
@@ -34,24 +30,61 @@ const getTop10ByTier = (heroes: HeroStats[], tier: number) => {
     })
     .filter((h) => h.picks > 50)
     .sort((a, b) => b.winrate - a.winrate)
-    .slice(0, 10);
+    .slice(0, 10) as TierHeroStats[];
 };
 
-const TiersPage = async () => {
-  let data: HeroStats[] = [];
+const TierHeroes = ({ tier }: { tier: number }) => {
+  const [heroes, setHeroes] = useState<TierHeroStats[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  try {
-    const res = await fetch("https://api.opendota.com/api/herostats", {
-      next: { revalidate: 3600 },
-    });
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("https://api.opendota.com/api/herostats");
+        const data = (await res.json()) as HeroStats[];
+        const topHeroes = getTop10ByTier(data, tier);
+        setHeroes(topHeroes);
+      } catch (e) {
+        console.error("Failed to fetch heroes", e);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
+    fetchData();
+  }, [tier]);
 
-    data = (await res.json()) as HeroStats[];
-  } catch (error) {
-    console.error(error);
-    return <div>Error loading data</div>;
-  }
+  if (loading) return <div>Loading heroes...</div>;
+
+  return (
+    <div className="hero-grid">
+      {heroes.map((hero, index) => (
+        <div key={hero.id} className="hero-card">
+          <div className="hero-image">
+            <Image
+              width={300}
+              height={170}
+              className="h-full w-full transform object-cover transition-transform duration-500 group-hover:scale-110"
+              src={`https://cdn.cloudflare.steamstatic.com${hero.img}`}
+              alt={hero.localized_name}
+            />
+          </div>
+          <div className="hero-info">
+            <h3>
+              {index + 1}. {hero.localized_name}
+            </h3>
+            <p>Winrate: {hero.winrate.toFixed(2)}%</p>
+            <p>Games Played: {hero.pro_pick?.toLocaleString()}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const TiersPage = () => {
+  const [activeTab, setActiveTab] = useState(1);
 
   return (
     <SecondLayout
@@ -61,65 +94,22 @@ const TiersPage = async () => {
       heading="Tier Meta Suggestions"
       subheading="Top 10 best heroes for every matchmaking tier"
     >
-      <div className="space-y-10 p-5">
-        {TIERS.map((tier) => {
-          const topHeroes = getTop10ByTier(data, tier.id);
-          return (
-            <div key={tier.name}>
-              <h2 className="text-xl font-bold mb-4">Tier {tier.id}</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {topHeroes.map((hero) => (
-                  <div
-                    key={hero.id}
-                    className="border-border-primary hover:border-secondary relative cursor-pointer overflow-hidden rounded-xl border-2 transition-transform duration-300 hover:-translate-y-2 hover:shadow-md hover:shadow-amber-200"
-                  >
-                    <div className="absolute top-2 left-2 z-10">
-                      <div
-                        className={`bg-black/70 border-${ATTRIBUTES[hero.primary_attr]?.color} text-${ATTRIBUTES[hero.primary_attr]?.color}`}
-                      >
-                        <span className={ATTRIBUTES[hero.primary_attr]?.color}>●</span>
-                      </div>
-                    </div>
-                    <div className="h-32 w-full overflow-hidden">
-                      <Image
-                        src={`https://cdn.cloudflare.steamstatic.com${hero.img}`}
-                        alt={hero.localized_name}
-                        width={300}
-                        height={170}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="p-3">
-                      <h3 className="truncate text-sm font-bold">
-                        {hero.localized_name}
-                      </h3>
-                      <div className="mt-1 flex justify-between text-xs">
-                        <span>Winrate</span>
-                        <span
-                          className={
-                            hero.winrate > 52
-                              ? "text-immortal"
-                              : hero.winrate < 48
-                              ? "text-secondary"
-                              : "text-text-primary"
-                          }
-                        >
-                          {hero.winrate.toFixed(2)}%
-                        </span>
-                      </div>
-                      <div className="hero-stat-bar">
-                        <div
-                          className="hero-stat-bar-fill hero-stat-bar-win"
-                          style={{ width: `${hero.winrate}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+      <div className="tier-wrapper">
+        <div className="tabs">
+          {TIERS.map((tier) => (
+            <div
+              key={tier.id}
+              className={`tab ${activeTab === tier.id ? "active" : ""}`}
+              onClick={() => setActiveTab(tier.id)}
+            >
+              <span className={`text-${tier.color}`}>{tier.name}</span>
             </div>
-          );
-        })}
+          ))}
+        </div>
+
+        <div className="tab-content">
+          <TierHeroes tier={activeTab} />
+        </div>
       </div>
     </SecondLayout>
   );

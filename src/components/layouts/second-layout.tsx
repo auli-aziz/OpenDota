@@ -25,8 +25,8 @@ const SecondLayout = ({
         </div>
         <p className="text-text-primary mt-1 text-xl">{description}</p>
       </div>
-      <div className="border-border-tertiary h-fit rounded-xl border-2">
-        <div className="border-border-tertiary from-background-secondary to-background-tertiary flex flex-col gap-y-1 border-b bg-gradient-to-tr px-8 py-10">
+      <div className="border-border-tertiary h-fit rounded-xl border-2 overflow-hidden">
+        <div className="border-border-tertiary bg-gradient-to-tr from-background-secondary to-background-tertiary flex flex-col gap-y-1 border-b px-8 py-10">
           <h1 className="text-secondary text-3xl font-bold">{heading}</h1>
           <p className="text-text-primary mt-1 text-lg">{subheading}</p>
         </div>
