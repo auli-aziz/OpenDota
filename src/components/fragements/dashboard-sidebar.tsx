@@ -33,14 +33,14 @@ const Sidebar = () => {
               {isOpen && (
                 <div>
                   <h1 className="text-secondary text-2xl font-bold">Dota 2</h1>
-                  <p className="text-tertiary text-sm">Meta Dashboard</p>
+                  <p className="text-tertiary text-base">Meta Dashboard</p>
                 </div>
               )}
             </div>
           </div>
 
           <nav
-            className={`text-text-primary flex flex-col gap-y-5 px-3 py-4 text-base font-medium ${
+            className={`text-text-primary flex flex-col gap-y-5 px-3 py-4 text-base lg:text-xl font-medium ${
               !isOpen ? "items-center" : ""
             }`}
           >

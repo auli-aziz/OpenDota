@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProMetaSkeleton = () => {
+const HeroCardListSkeleton = () => {
   return (
     <div className="flex flex-col gap-y-6">
       <div className="bg-background-tertiary flex animate-pulse overflow-hidden rounded-xl">
@@ -52,4 +52,4 @@ const ProMetaSkeleton = () => {
   );
 };
 
-export default ProMetaSkeleton;
+export default HeroCardListSkeleton;

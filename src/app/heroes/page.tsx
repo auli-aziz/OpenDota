@@ -1,18 +1,18 @@
 import { Sword } from "lucide-react";
-import Image from "next/image";
 import SecondLayout from "~/components/layouts/second-layout";
+import HeroCard from "~/components/ui/hero-card";
+import PercentageBar from "~/components/ui/percentage-bar";
 import type { HeroStats } from "~/types/heroes";
-import { calculateTotalPicks, calculateWinrate } from "~/utils/heroUtils";
-
-const ATTRIBUTES = {
-  str: { name: "Strength", color: "hero-attribute-str" },
-  agi: { name: "Agility", color: "hero-attribute-agi" },
-  int: { name: "Intelligence", color: "hero-attribute-int" },
-  all: { name: "Universal", color: "hero-attribute-uni" },
-};
+import {
+  calculatePickrate,
+  calculateTotalPicks,
+  calculateTotalPicksAllHeroes,
+  calculateWinrate,
+} from "~/utils/heroUtils";
 
 const HeroesPage = async () => {
   let data: HeroStats[] = [];
+  let totalHeroPicks = 0;
 
   try {
     const res = await fetch("https://api.opendota.com/api/herostats", {
@@ -24,6 +24,7 @@ const HeroesPage = async () => {
     }
 
     data = (await res.json()) as HeroStats[];
+    totalHeroPicks = calculateTotalPicksAllHeroes(data);
   } catch (error) {
     console.error(error);
     if (error instanceof Error) {
@@ -45,76 +46,30 @@ const HeroesPage = async () => {
           data.map((d) => {
             const totalPicks = calculateTotalPicks(d);
             const winRate = Number(calculateWinrate(d, totalPicks));
+            const pickRate = Number(calculatePickrate(d, totalHeroPicks));
             return (
-              <div
+              <HeroCard
                 key={d.name}
-                className={
-                  "border-border-primary hover:border-secondary relative cursor-pointer overflow-hidden rounded-xl border-2 transition-transform duration-300 hover:-translate-y-2 hover:shadow-md hover:shadow-amber-200"
-                }
-              >
-                <div className="absolute top-2 left-2 z-10">
-                  <div
-                    className={`bg-black/70 border-${ATTRIBUTES[d.primary_attr]?.color} text-${ATTRIBUTES[d.primary_attr]?.color}`}
-                  >
-                    <span className={ATTRIBUTES[d.primary_attr]?.color}>●</span>
-                  </div>
-                </div>
-                {/* <div className="absolute top-2 right-2 z-10">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className={winRateClass}>{winRate.toFixed(2)}%</Badge>
-                      </TooltipTrigger>
-                      <TooltipContent className="dota-tooltip">
-                        <p>Win rate across {hero.games_played?.toLocaleString() || 0} games</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div> */}
-                <div className="h-40 w-full overflow-hidden">
-                  {d.img && (
-                    <Image
-                      src={`https://cdn.cloudflare.steamstatic.com${d.img}`}
-                      alt={d.name || `Hero ${d.id}`}
-                      width={300}
-                      height={170}
-                      className="h-full w-full transform object-cover transition-transform duration-500 group-hover:scale-110"
+                hero={d}
+                totalHeroPicks={totalHeroPicks}
+                footer={
+                  <>
+                    <PercentageBar
+                      title="Win Rate"
+                      num={null}
+                      percentage={winRate}
+                      color="bg-secondary"
+                      colorPercent="text-red-500/80"
                     />
-                  )}
-                </div>
-                <div className="p-3">
-                  <h3 className="truncate text-lg font-bold">
-                    {d.localized_name || `Hero ${d.id}`}
-                  </h3>
-
-                  <div className="mt-2 space-y-2">
-                    <div>
-                      <div className="mb-1 flex justify-between text-xs">
-                        <span>Win Rate</span>
-                        <span
-                          className={
-                            winRate > 52
-                              ? "text-immortal"
-                              : winRate < 48
-                                ? "text-secondary"
-                                : "text-text-primary"
-                          }
-                        >
-                          {winRate.toFixed(2)}%
-                        </span>
-                      </div>
-                      <div className="hero-stat-bar">
-                        <div
-                          className="hero-stat-bar-fill hero-stat-bar-win"
-                          style={{
-                            width: `${winRate}%`,
-                          }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                    <PercentageBar
+                      title="Pick Rate"
+                      num={totalPicks}
+                      percentage={pickRate}
+                      color="bg-guardian"
+                    />
+                  </>
+                }
+              />
             );
           })
         ) : (

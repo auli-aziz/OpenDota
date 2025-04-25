@@ -1,11 +1,11 @@
 import React from "react";
 
-const RankDisplay = ({ index }: { index: number }) => {
+const DarkBadge = ({ content }: { content: string }) => {
   return (
     <span className="bg-background-primary border-secondary text-secondary rounded-full border-[1px] px-3">
-      #{index + 1}
+      {content}
     </span>
   );
 };
 
-export default RankDisplay;
+export default DarkBadge;
