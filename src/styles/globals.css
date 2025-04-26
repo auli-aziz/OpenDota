@@ -68,7 +68,7 @@
   }
 
   .hero-stat-bar {
-    @apply h-2 rounded-full bg-tertiary overflow-hidden relative;
+    @apply bg-tertiary relative h-2 overflow-hidden rounded-full;
   }
 
   .hero-stat-bar-fill {
@@ -78,8 +78,30 @@
   .hero-card {
     @apply grid w-full grid-cols-5 gap-5 p-10;
   }
-  
+
   .tier-tab-active {
-    @apply border-b-2 -translate-y-0.5 border-secondary;
+    @apply border-secondary -translate-y-0.5 border-b-2;
+  }
+
+  .gold-shadow-text {
+    text-shadow: 0 0 5px rgba(230, 181, 58, 0.5);
+  }
+
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .card-effect {
+    @apply relative cursor-pointer overflow-hidden transition-transform duration-300 hover:-translate-y-2 hover:shadow-sm hover:shadow-amber-200;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(-6%);
+  }
+  50% {
+    transform: translateY(6%);
   }
 }

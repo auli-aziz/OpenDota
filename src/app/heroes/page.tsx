@@ -58,13 +58,13 @@ const HeroesPage = async () => {
                       title="Win Rate"
                       num={null}
                       percentage={winRate}
-                      barColor="secondary"
+                      barColor="bg-secondary"
                     />
                     <PercentageBar
                       title="Pick Rate"
                       num={totalPicks}
                       percentage={pickRate}
-                      barColor="guardian"
+                      barColor="bg-guardian"
                       colorPercent={"primary"}
                     />
                   </>

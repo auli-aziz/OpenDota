@@ -21,13 +21,13 @@ const SecondLayout = ({
       <div className="mb-9 flex w-full flex-col gap-y-1">
         <div className="text-secondary flex h-12 items-center gap-6">
           <Logo className="h-10 w-10" /> {/* use component */}
-          <h1 className="text-4xl font-bold">{title}</h1>
+          <h1 className="text-4xl font-bold gold-shadow-text">{title}</h1>
         </div>
         <p className="text-text-primary mt-1 text-xl">{description}</p>
       </div>
       <div className="border-border-tertiary h-fit rounded-xl border-2 overflow-hidden">
         <div className="border-border-tertiary bg-gradient-to-tr from-background-secondary to-background-tertiary flex flex-col gap-y-1 border-b px-8 py-10">
-          <h1 className="text-secondary text-3xl font-bold">{heading}</h1>
+          <h1 className="text-secondary text-3xl font-bold gold-shadow-text">{heading}</h1>
           <p className="text-text-primary mt-1 text-lg">{subheading}</p>
         </div>
         {children}

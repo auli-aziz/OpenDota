@@ -24,7 +24,7 @@ const PercentageBar = ({
       </div>
       <div className="hero-stat-bar">
         <div
-          className={`hero-stat-bar-fill hero-stat-bar-win bg-guardian bg-${barColor}`}
+          className={`hero-stat-bar-fill hero-stat-bar-win bg-guardian ${barColor}`}
           style={{
             width: `${percentage}%`,
           }}

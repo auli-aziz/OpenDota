@@ -6,10 +6,16 @@ import Image from "next/image";
 import type { HeroStats, PlayerHero } from "../../types/heroes";
 import SecondLayout from "~/components/layouts/second-layout";
 import PlayerInput from "~/components/ui/player-input";
+import { getRecommendedHeroes } from "~/utils/heroUtils";
+import DefaultRecommendations from "~/components/ui/default-recommendations";
+import { EXAMPLE_PLAYERS } from "~/utils/constants";
+import HeroCard from "~/components/ui/hero-card";
+import PercentageBar from "~/components/ui/percentage-bar";
+import MapRedBadge from "~/components/fragements/map-red-badge";
 
 const RecommendationsPage = () => {
   const [suggestedHeroes, setSuggestedHeroes] = useState<HeroStats[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const accountRef = useRef<HTMLInputElement>(null);
 
@@ -18,38 +24,14 @@ const RecommendationsPage = () => {
       const playerHeroesResponse = await fetch(
         `https://api.opendota.com/api/players/${accountRef.current!.value}/heroes`,
       );
-      const playerHeroes: PlayerHero[] = await playerHeroesResponse.json();
+      const playerHeroes = (await playerHeroesResponse.json()) as PlayerHero[];
 
       const heroStatsResponse = await fetch(
         "https://api.opendota.com/api/herostats",
       );
-      const allHeroes: HeroStats[] = await heroStatsResponse.json();
+      const allHeroes = (await heroStatsResponse.json()) as HeroStats[];
 
-      const topHeroes = playerHeroes
-        .sort((a, b) => b.games - a.games)
-        .slice(0, 5);
-
-      // Get roles from top heroes
-      const topHeroesData = topHeroes.map((hero) =>
-        allHeroes.find((h) => h.id === hero.hero_id),
-      );
-      const commonRoles = new Set<string>();
-      topHeroesData.forEach((hero) => {
-        hero?.roles.forEach((role: string) => commonRoles.add(role));
-      });
-
-      const recommended = allHeroes
-        .filter((hero) => {
-          const playerHero = playerHeroes.find((h) => h.hero_id === hero.id);
-          const hasCommonRole = hero.roles.some((role: string) =>
-            commonRoles.has(role),
-          );
-          const hasLowPlayCount = !playerHero || playerHero.games < 5;
-          const hasGoodWinrate = hero.pro_win / hero.pro_pick > 0.5;
-          return hasCommonRole && hasLowPlayCount && hasGoodWinrate;
-        })
-        .sort((a, b) => b.pro_win / b.pro_pick - a.pro_win / a.pro_pick)
-        .slice(0, 6);
+      const recommended = getRecommendedHeroes({ allHeroes, playerHeroes });
 
       setSuggestedHeroes(recommended);
     } catch (err) {
@@ -71,14 +53,22 @@ const RecommendationsPage = () => {
     >
       <div className="flex flex-col gap-y-5 p-5">
         <PlayerInput ref={accountRef} setAccountId={fetchData} />
-        <button
-          onClick={() => {
-            accountRef.current!.value = "152740380";
-            void fetchData();
-          }}
-        >
-          152740380
-        </button>
+        <div className="text-text-primary flex items-center gap-x-5">
+          <span>Example IDs:</span>
+          {EXAMPLE_PLAYERS.map((example) => (
+            <button
+              key={example.id}
+              onClick={() => {
+                accountRef.current!.value = example.id.toString();
+                void fetchData();
+              }}
+              className="border-border-tertiary rounded-lg border-2 px-5 py-2"
+            >
+              <span className="font-semibold">{example.name}</span> (
+              {example.id})
+            </button>
+          ))}
+        </div>
         {loading ? (
           <div className="flex h-64 items-center justify-center">
             <div className="text-2xl">Loading...</div>
@@ -92,43 +82,36 @@ const RecommendationsPage = () => {
             <div>
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {suggestedHeroes.map((hero) => (
-                  <div
-                    key={hero.id}
-                    className="bg-background-secondary rounded-lg p-4 shadow-md"
-                  >
-                    <div className="relative h-48 w-full">
-                      <Image
-                        src={`https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/${hero.img}`}
-                        alt={hero.localized_name}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <div className="mt-4">
-                      <h3 className="text-xl font-semibold">
-                        {hero.localized_name}
-                      </h3>
-                      <p className="text-text-secondary mt-2">
-                        Win Rate:{" "}
-                        {((hero.pro_win / hero.pro_pick) * 100).toFixed(1)}%
-                      </p>
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        {hero.roles.map((role: string) => (
-                          <span
-                            key={role}
-                            className="bg-primary/10 text-primary rounded-full px-3 py-1 text-sm"
-                          >
-                            {role}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                  <>
+                    <HeroCard
+                      key={hero.name}
+                      hero={hero}
+                      footer={
+                        <>
+                          <PercentageBar
+                            title="Win Rate"
+                            percentage={Number(
+                              ((hero.pro_win / hero.pro_pick) * 100).toFixed(1),
+                            )}
+                            num={null}
+                            barColor="bg-immortal"
+                          />
+                          <MapRedBadge hero={hero} />
+                        </>
+                      }
+                    />
+                  </>
                 ))}
               </div>
             </div>
           </div>
         )}
+
+        <DefaultRecommendations
+          loading={loading}
+          error={error}
+          suggestedHeroes={suggestedHeroes}
+        />
       </div>
     </SecondLayout>
   );

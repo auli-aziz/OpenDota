@@ -13,10 +13,8 @@ const HeroCard = ({
   footer?: ReactNode;
 }) => {
   return (
-    <div className="border-border-primary group relative cursor-pointer overflow-hidden rounded-xl border-2 transition-transform duration-300 hover:-translate-y-2 hover:shadow-sm hover:shadow-amber-200">
-      {tag && (
-        <div className="absolute top-3 right-2.5 z-10">{tag}</div>
-      )}
+    <div className="border-border-primary group card-effect rounded-xl border-2">
+      {tag && <div className="absolute top-3 right-2.5 z-10">{tag}</div>}
 
       <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       <AttributesTag primary_att={hero.primary_attr} />
@@ -35,14 +33,12 @@ const HeroCard = ({
 
       <div className="h-16" />
 
-      <div className="absolute bottom-0 h-fit w-full bg-gradient-to-t from-black via-black to-transparent p-3 pt-8 z-10">
+      <div className="absolute bottom-0 z-10 h-fit w-full bg-gradient-to-t from-black via-black to-transparent p-3 pt-8">
         <h3 className="truncate text-2xl font-bold">
           {hero.localized_name || `Hero ${hero.id}`}
         </h3>
 
-        <div className="mt-2 space-y-2">
-          {footer}
-        </div>
+        <div className="mt-2 space-y-2">{footer}</div>
       </div>
     </div>
   );

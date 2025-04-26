@@ -32,7 +32,7 @@ const Sidebar = () => {
               />
               {isOpen && (
                 <div>
-                  <h1 className="text-secondary text-2xl font-bold">Dota 2</h1>
+                  <h1 className="text-secondary text-2xl font-bold gold-shadow-text">Dota 2</h1>
                   <p className="text-tertiary text-base">Meta Dashboard</p>
                 </div>
               )}

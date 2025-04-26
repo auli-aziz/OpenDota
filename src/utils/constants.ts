@@ -15,3 +15,8 @@ export const TIERS = [
   { id: 7, name: "Divine", textColor: "text-divine" },
   { id: 8, name: "Immortal", textColor: "text-immortal" },
 ];
+
+export const EXAMPLE_PLAYERS = [
+  { id: "152740380", name: "Example Player 1" },
+  { id: "80523971", name: "Example Player 2" },
+]

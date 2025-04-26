@@ -1,4 +1,4 @@
-import type { HeroStats, TierHeroStats } from "~/types/heroes";
+import type { HeroStats, PlayerHero, TierHeroStats } from "~/types/heroes";
 
 export const calculateTotalPicks = (hero: HeroStats) => {
   const totalPicks =
@@ -62,6 +62,7 @@ export const calculatePickrate = (hero: HeroStats, totalPicks: number) => {
   return ((heroPicks / totalPicks) * 100).toFixed(2);
 };
 
+// function for pro-meta page
 export const getTopHeroesByProStats = (heroes: HeroStats[]) => {
   const totalProScore: number = heroes.reduce(
     (sum, hero) => sum + (hero.pro_pick ?? 0) + (hero.pro_ban ?? 0),
@@ -81,6 +82,7 @@ export const getTopHeroesByProStats = (heroes: HeroStats[]) => {
     .sort((a, b) => b.proScore - a.proScore);
 };
 
+// function for top tiers page
 export const getTop10ByTier = (heroes: HeroStats[], tier: number) => {
   const tierPickKey = `${tier}_pick` as keyof HeroStats;
   const tierWinKey = `${tier}_win` as keyof HeroStats;
@@ -96,3 +98,33 @@ export const getTop10ByTier = (heroes: HeroStats[], tier: number) => {
     .sort((a, b) => b.winrate - a.winrate)
     .slice(0, 10) as TierHeroStats[];
 };
+
+// function for recommendations page
+export const getRecommendedHeroes = ({ allHeroes, playerHeroes }: { allHeroes: HeroStats[], playerHeroes: PlayerHero[]}) => {
+  const topHeroes = playerHeroes
+        .sort((a, b) => b.games - a.games)
+        .slice(0, 5);
+
+      // Get roles from top heroes
+      const topHeroesData = topHeroes.map((hero) =>
+        allHeroes.find((h) => h.id === hero.hero_id),
+      );
+      const commonRoles = new Set<string>();
+      topHeroesData.forEach((hero) => {
+        hero?.roles.forEach((role: string) => commonRoles.add(role));
+      });
+  
+  const recommended = allHeroes
+        .filter((hero) => {
+          const playerHero = playerHeroes.find((h) => h.hero_id === hero.id);
+          const hasCommonRole = hero.roles.some((role: string) =>
+            commonRoles.has(role),
+          );
+          const hasLowPlayCount = !playerHero || playerHero.games < 5;
+          const hasGoodWinrate = hero.pro_win / hero.pro_pick > 0.5;
+          return hasCommonRole && hasLowPlayCount && hasGoodWinrate;
+        })
+        .sort((a, b) => b.pro_win / b.pro_pick - a.pro_win / a.pro_pick)
+        .slice(0, 6);
+  return recommended
+}
