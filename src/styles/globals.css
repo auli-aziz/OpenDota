@@ -75,7 +75,7 @@
     @apply absolute top-0 left-0 h-full rounded-full;
   }
 
-  .hero-card {
+  .hero-card-grid {
     @apply grid w-full grid-cols-5 gap-5 p-10;
   }
 

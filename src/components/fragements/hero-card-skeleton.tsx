@@ -1,6 +1,6 @@
 const HeroCardSkeleton = () => {
   return (
-    <div className="animate-pulse min-w-60 rounded-xl border-2 border-border-primary bg-background-secondary">
+    <div className="animate-pulse w-full rounded-xl border-2 border-border-primary bg-background-secondary">
       <div className="h-48 w-full bg-background-tertiary" />
       <div className="space-y-3 p-4">
         <div className="h-6 w-2/3 rounded bg-background-tertiary" />

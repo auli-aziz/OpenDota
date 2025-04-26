@@ -16,8 +16,7 @@ const Card = ({
   image: string;
 }) => {
   return (
-    <div className="border-border-primary group card-effect h-fit min-h-[450px] w-full overflow-hidden rounded-xl border-2">
-      <Link href={link}>
+      <Link href={link} className="border-border-primary group card-effect h-fit min-h-[450px] w-full overflow-hidden rounded-xl border-2">
         <div className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <div className="h-[450px] w-full overflow-hidden">
           <Image
@@ -34,7 +33,6 @@ const Card = ({
           <p className="text-immortal gold-shadow-text">{description}</p>
         </div>
       </Link>
-    </div>
   );
 };
 

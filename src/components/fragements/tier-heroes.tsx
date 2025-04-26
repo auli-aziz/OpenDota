@@ -34,18 +34,19 @@ const TierHeroes = ({ tier }: { tier: number }) => {
 
     void fetchData();
   }, [tier]);
+
   return (
     <>
       {loading ? (
-        <div className="grid grid-cols-5 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5">
           {Array.from({ length: 10 }, (_, i) => (
             <HeroCardSkeleton key={i} />
           ))}
         </div>
       ) : error ? (
-        <p>{error}</p>
+        <p className="text-center text-red-500">{error}</p>
       ) : (
-        <div className="grid grid-cols-5 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5">
           {heroes.map((hero, index) => (
             <HeroCard
               key={hero.name}
@@ -60,8 +61,10 @@ const TierHeroes = ({ tier }: { tier: number }) => {
                     barColor={"secondary"}
                   />
                   <div className="flex items-center justify-between text-sm">
-                    <span className="">Games Played</span>{" "}
-                    <span className="text-primary font-semibold text-base">{hero.pro_pick?.toLocaleString()}</span>
+                    <span>Games Played</span>
+                    <span className="text-primary font-semibold text-base">
+                      {hero.pro_pick?.toLocaleString()}
+                    </span>
                   </div>
                 </>
               }

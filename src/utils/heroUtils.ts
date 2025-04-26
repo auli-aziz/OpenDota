@@ -1,5 +1,6 @@
 import type { HeroStats, PlayerHero, TierHeroStats } from "~/types/heroes";
 
+// TODO: add test cases
 export const calculateTotalPicks = (hero: HeroStats) => {
   const totalPicks =
     hero["1_pick"] +
@@ -100,31 +101,45 @@ export const getTop10ByTier = (heroes: HeroStats[], tier: number) => {
 };
 
 // function for recommendations page
-export const getRecommendedHeroes = ({ allHeroes, playerHeroes }: { allHeroes: HeroStats[], playerHeroes: PlayerHero[]}) => {
-  const topHeroes = playerHeroes
-        .sort((a, b) => b.games - a.games)
-        .slice(0, 5);
+export const getRecommendedHeroes = ({
+  allHeroes,
+  playerHeroes,
+}: {
+  allHeroes: HeroStats[];
+  playerHeroes: PlayerHero[];
+}) => {
+  // find most frequently played heroes by the player
+  const topHeroes = playerHeroes.sort((a, b) => b.games - a.games).slice(0, 5);
 
-      // Get roles from top heroes
-      const topHeroesData = topHeroes.map((hero) =>
-        allHeroes.find((h) => h.id === hero.hero_id),
-      );
-      const commonRoles = new Set<string>();
-      topHeroesData.forEach((hero) => {
-        hero?.roles.forEach((role: string) => commonRoles.add(role));
-      });
-  
+  // get complete data of player's top heroes
+  const topHeroesData = topHeroes.map((hero) =>
+    allHeroes.find((h) => h.id === hero.hero_id),
+  );
+
+  // save common roles in a set
+  const commonRoles = new Set<string>();
+  topHeroesData.forEach((hero) => {
+    hero?.roles.forEach((role: string) => commonRoles.add(role));
+  });
+
+
   const recommended = allHeroes
-        .filter((hero) => {
-          const playerHero = playerHeroes.find((h) => h.hero_id === hero.id);
-          const hasCommonRole = hero.roles.some((role: string) =>
-            commonRoles.has(role),
-          );
-          const hasLowPlayCount = !playerHero || playerHero.games < 5;
-          const hasGoodWinrate = hero.pro_win / hero.pro_pick > 0.5;
-          return hasCommonRole && hasLowPlayCount && hasGoodWinrate;
-        })
-        .sort((a, b) => b.pro_win / b.pro_pick - a.pro_win / a.pro_pick)
-        .slice(0, 6);
-  return recommended
-}
+    .filter((hero) => {
+      // check if the player has already played this hero
+      const playerHero = playerHeroes.find((h) => h.hero_id === hero.id);
+      // to see the heroes with low play coun
+      const hasLowPlayCount = !playerHero || playerHero.games < 5;
+
+      // check if the hero has the same role as the player's favorite role
+      const hasCommonRole = hero.roles.some((role: string) =>
+        commonRoles.has(role),
+      );
+
+      // check if the hero has a good win rate
+      const hasGoodWinrate = hero.pro_win / hero.pro_pick > 0.5;
+      return hasCommonRole && hasLowPlayCount && hasGoodWinrate;
+    })
+    .sort((a, b) => b.pro_win / b.pro_pick - a.pro_win / a.pro_pick)
+    .slice(0, 8);
+  return recommended;
+};

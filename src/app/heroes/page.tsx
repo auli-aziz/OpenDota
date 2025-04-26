@@ -28,8 +28,7 @@ const HeroesPage = async () => {
   } catch (error) {
     console.error(error);
     if (error instanceof Error) {
-      // TODO: enhance the error handling
-      return <div>Error loading data: {error.message}</div>;
+      return <div className="text-center text-lg text-red-500 p-5">Error loading data: {error.message}</div>;
     }
   }
 
@@ -37,12 +36,11 @@ const HeroesPage = async () => {
     <SecondLayout
       title="Hero Overview"
       logo={Sword}
-      description="Detailed statistics for all Dota 2 heroes, including win rates, pick
-          rates, and performance metrics"
+      description="Detailed statistics for all Dota 2 heroes, including win rates, pick rates, and performance metrics."
       heading="Hero Statistics"
-      subheading="Comprehensive data on all heroes in the current meta"
+      subheading="Comprehensive data on all heroes in the current meta."
     >
-      <div className="hero-card">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 p-5">
         {data.length > 0 ? (
           data.map((d) => {
             const totalPicks = calculateTotalPicks(d);
@@ -65,7 +63,7 @@ const HeroesPage = async () => {
                       num={totalPicks}
                       percentage={pickRate}
                       barColor="bg-guardian"
-                      colorPercent={"primary"}
+                      colorPercent="primary"
                     />
                   </>
                 }
@@ -73,7 +71,7 @@ const HeroesPage = async () => {
             );
           })
         ) : (
-          <div>No data found.</div>
+          <div className="col-span-full text-center text-lg">No data found.</div>
         )}
       </div>
     </SecondLayout>

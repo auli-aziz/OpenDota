@@ -9,7 +9,7 @@ const PlayerInput = forwardRef<HTMLInputElement, InputProps>(
   ({ setAccountId }, ref) => {
 
     return (
-      <div className="flex h-12 w-full gap-3">
+      <div className="flex h-12 w-full gap-3 flex-col sm:flex-row mb-3 sm:mb-0">
         <div className="relative w-full">
           <User className="text-text-primary absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2" />
           <input
