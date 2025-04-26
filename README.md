@@ -62,18 +62,18 @@ pnpm test
 src/
 ├── app/              # Next.js pages (App Router)
 ├── components/       # UI components
-├── lib/              # Data processing logic
-├── services/         # API fetchers
 ├── styles/           # Tailwind/global styles
-├── tests/            # Unit tests
+├── lib/              # Data processing logic
+├── utils/            # Helper functions/constants
 └── types/            # TypeScript types/interfaces
+__tests__/            # Unit tests
 ```
 
-<!-- ## 📦 Portability
+## 📦 Portability
 
 - Cross-platform compatible (Windows, macOS, Linux)
 - Can optionally be containerized with Docker
-- Uses `pnpm` for faster installs and deterministic lockfiles -->
+- Uses `pnpm` for faster installs and deterministic lockfiles
 
 ## 🥷 Sample Player IDs (for demo/testing)
 

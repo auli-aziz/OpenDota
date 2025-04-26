@@ -9,6 +9,7 @@ const config = {
   images: {
     domains: ['cdn.cloudflare.steamstatic.com'], // Add the domain here
   },
+  output: 'standalone'
 };
 
 export default config;
