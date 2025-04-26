@@ -6,12 +6,12 @@ export const ATTRIBUTES = {
 };
 
 export const TIERS = [
-  { id: 1, name: "Herald", color: "gray" },
-  { id: 2, name: "Guardian", color: "green" },
-  { id: 3, name: "Crusader", color: "emerald" },
-  { id: 4, name: "Archon", color: "blue" },
-  { id: 5, name: "Legend", color: "indigo" },
-  { id: 6, name: "Ancient", color: "purple" },
-  { id: 7, name: "Divine", color: "pink" },
-  { id: 8, name: "Immortal", color: "gold" },
+  { id: 1, name: "Herald", textColor: "text-herald" },
+  { id: 2, name: "Guardian", textColor: "text-guardian" },
+  { id: 3, name: "Crusader", textColor: "text-crusader" },
+  { id: 4, name: "Archon", textColor: "text-archon" },
+  { id: 5, name: "Legend", textColor: "text-legend" },
+  { id: 6, name: "Ancient", textColor: "text-ancient" },
+  { id: 7, name: "Divine", textColor: "text-divine" },
+  { id: 8, name: "Immortal", textColor: "text-immortal" },
 ];

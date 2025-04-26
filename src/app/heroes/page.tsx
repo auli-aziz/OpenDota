@@ -28,6 +28,7 @@ const HeroesPage = async () => {
   } catch (error) {
     console.error(error);
     if (error instanceof Error) {
+      // TODO: enhance the error handling
       return <div>Error loading data: {error.message}</div>;
     }
   }
@@ -41,7 +42,7 @@ const HeroesPage = async () => {
       heading="Hero Statistics"
       subheading="Comprehensive data on all heroes in the current meta"
     >
-      <div className="grid w-full grid-cols-4 gap-5 p-10">
+      <div className="hero-card">
         {data.length > 0 ? (
           data.map((d) => {
             const totalPicks = calculateTotalPicks(d);
@@ -51,21 +52,20 @@ const HeroesPage = async () => {
               <HeroCard
                 key={d.name}
                 hero={d}
-                totalHeroPicks={totalHeroPicks}
                 footer={
                   <>
                     <PercentageBar
                       title="Win Rate"
                       num={null}
                       percentage={winRate}
-                      color="bg-secondary"
-                      colorPercent="text-red-500/80"
+                      barColor="secondary"
                     />
                     <PercentageBar
                       title="Pick Rate"
                       num={totalPicks}
                       percentage={pickRate}
-                      color="bg-guardian"
+                      barColor="guardian"
+                      colorPercent={"primary"}
                     />
                   </>
                 }

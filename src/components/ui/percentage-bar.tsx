@@ -4,14 +4,14 @@ const PercentageBar = ({
   title,
   num,
   percentage,
-  color,
-  colorPercent = "text-secondary",
+  barColor,
+  colorPercent = "secondary",
 }: {
   title: string;
   num: number | null;
   percentage: number;
-  color: string;
-  colorPercent: string | null;
+  barColor: string;
+  colorPercent?: string;
 }) => {
   return (
     <div className="lg:w-full">
@@ -19,12 +19,12 @@ const PercentageBar = ({
         <span className="text-sm">{title}</span>
         <div className={`items-center ${num && "flex justify-between"}`}>
           {num && <span className="mr-2 text-xs text-amber-100">({num})</span>}
-          <span className={`${colorPercent} text-sm`}>{percentage}%</span>
+          <span className={`text-${colorPercent} text-sm`}>{percentage}%</span>
         </div>
       </div>
       <div className="hero-stat-bar">
         <div
-          className={`hero-stat-bar-fill hero-stat-bar-win bg-guardian ${color}`}
+          className={`hero-stat-bar-fill hero-stat-bar-win bg-guardian bg-${barColor}`}
           style={{
             width: `${percentage}%`,
           }}

@@ -17,20 +17,20 @@ const TiersPage = () => {
       heading="Tier Meta Suggestions"
       subheading="Top 10 best heroes for every matchmaking tier"
     >
-      <div className="tier-wrapper">
-        <div className="tabs">
+      <div className="flex flex-col items-center gap-y-8 p-5">
+        <div className="bg-background-tertiary flex w-fit justify-between gap-x-1 p-1">
           {TIERS.map((tier) => (
             <div
               key={tier.id}
-              className={`tab ${activeTab === tier.id ? "active" : ""}`}
+              className={`hover:cursor-pointer transition-transform bg-background-primary min-w-28 rounded-md py-1 text-center text-md font-semibold ${activeTab === tier.id ? "tier-tab-active" : "hover:-translate-0.5 hover:border-b-2 hover:border-secondary/40"}`}
               onClick={() => setActiveTab(tier.id)}
             >
-              <span className={`text-${tier.color}`}>{tier.name}</span>
+              <span className={`${tier.textColor}`}>{tier.name}</span>
             </div>
           ))}
         </div>
 
-        <div className="tab-content">
+        <div>
           <TierHeroes tier={activeTab} />
         </div>
       </div>

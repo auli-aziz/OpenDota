@@ -74,4 +74,12 @@
   .hero-stat-bar-fill {
     @apply absolute top-0 left-0 h-full rounded-full;
   }
+
+  .hero-card {
+    @apply grid w-full grid-cols-5 gap-5 p-10;
+  }
+  
+  .tier-tab-active {
+    @apply border-b-2 -translate-y-0.5 border-secondary;
+  }
 }

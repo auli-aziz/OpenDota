@@ -1,6 +1,8 @@
 import { ATTRIBUTES } from "~/utils/constants";
 
-const AttributesTag = ({primary_att}: {primary_att: string}) => {
+type AttributeKey = keyof typeof ATTRIBUTES;
+
+const AttributesTag = ({primary_att}: {primary_att: AttributeKey}) => {
   return (
     <div className="absolute top-2 left-2 z-10">
       <div

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import SecondLayout from "~/components/layouts/second-layout";
 import { ChartNoAxesColumnIncreasing } from "lucide-react";
@@ -61,13 +60,13 @@ const TopHeroesPage = () => {
                       title="Pro Pick + Ban"
                       percentage={Number(hero.proScorePercent.toFixed(2))}
                       num={Number(hero.proScore)}
-                      color="bg-secondary"
+                      barColor="secondary"
                     />
                     <PercentageBar
                       title="Pro Win"
                       percentage={Number(hero.proWinrate.toFixed(2))}
                       num={Number(hero.proWin)}
-                      color="bg-guardian"
+                      barColor="guardian"
                     />
                   </>
                 }
