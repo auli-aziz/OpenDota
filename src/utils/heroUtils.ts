@@ -1,6 +1,5 @@
 import type { HeroStats, PlayerHero, TierHeroStats } from "~/types/heroes";
 
-// TODO: add test cases
 export const calculateTotalPicks = (hero: HeroStats) => {
   const totalPicks =
     hero["1_pick"] +

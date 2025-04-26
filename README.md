@@ -69,11 +69,11 @@ src/
 └── types/            # TypeScript types/interfaces
 ```
 
-<!-- ## 📦 Portability
+## 📦 Portability
 
 - Cross-platform compatible (Windows, macOS, Linux)
 - Can optionally be containerized with Docker
-- Uses `pnpm` for faster installs and deterministic lockfiles -->
+- Uses `pnpm` for faster installs and deterministic lockfiles
 
 ## 🥷 Sample Player IDs (for demo/testing)
 

@@ -21,7 +21,6 @@ const TiersPage = () => {
       <div className="flex flex-col items-center gap-y-8 px-4 sm:px-8 md:px-10 py-5">
         <Tab>
           <div className="flex flex-wrap justify-center gap-3">
-            {/* TODO: Add unit test for tiers tab & shows skeleton initially */}
             {TIERS.map((tier) => (
               <div
                 key={tier.id}
